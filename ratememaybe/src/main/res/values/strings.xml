@@ -1,0 +1,7 @@
+<resources>
+    <string name="dialog_rating_message">If you enjoy using %s, please take a moment to rate the app. Thank you for your support!</string>
+    <string name="dialog_rating_title">Rate %s</string>
+    <string name="dialog_rating_positive">Rate now</string>
+    <string name="dialog_rating_neutral">Later</string>
+    <string name="dialog_rating_negative">No, thanks</string>
+</resources>

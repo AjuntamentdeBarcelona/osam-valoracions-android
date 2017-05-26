@@ -1,0 +1,15 @@
+<resources>
+
+<!-- Base application theme. -->
+<style name="RateMeMaybeAppTheme" parent="Theme.AppCompat.Light">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+</style>
+
+<style name="RateMeMaybeDialog" parent="@android:style/Theme.Holo.Light.Dialog.MinWidth">
+    <item name="android:windowBackground">@color/translucent</item>
+</style>
+
+</resources>
