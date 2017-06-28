@@ -68,7 +68,7 @@ mirror/
 
 #/gradle
 #gradle/
-gradle/wrapper/gradle-wrapper.properties
+#gradle/wrapper/gradle-wrapper.properties
 
 # Monitoring
 *.hprof
