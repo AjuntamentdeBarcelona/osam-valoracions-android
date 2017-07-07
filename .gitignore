@@ -66,10 +66,6 @@ mirror/
 *.orig
 *.bak
 
-#/gradle
-#gradle/
-#gradle/wrapper/gradle-wrapper.properties
-
 # Monitoring
 *.hprof
 *.trace
