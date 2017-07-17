@@ -1,11 +1,14 @@
 package cat.bcn.ratememaybeapp;
 
+import com.crashlytics.android.Crashlytics;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import cat.bcn.ratememaybe.RateMeMaybe;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMMUserChoiceListener {
 
@@ -14,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         askForRating();
     }
