@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static cat.bcn.ratememaybe.RateMeMaybeFragment.UNDEFINED;
 
@@ -57,7 +59,7 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
 
     private int numApert;
 
-    private String text;
+    private Map<String, String> messages;
 
     private String serviceUrl;
 
@@ -134,8 +136,12 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         this.mMinDaysUntilNextPrompt = minDaysUntilNextPrompt;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public Map<String, String> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Map<String, String> messages) {
+        this.messages = messages;
     }
 
     public void setServiceUrl(String serviceUrl) {
@@ -176,7 +182,7 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
             return;
         }
         RateMeMaybeFragment frag = new RateMeMaybeFragment();
-        frag.setData(getIcon(), this, mButtonsTextColor, mTitleColor, mMessageColor, mBackgroundColor, text);
+        frag.setData(getIcon(), this, mButtonsTextColor, mTitleColor, mMessageColor, mBackgroundColor, messages);
         frag.show(mActivity.getSupportFragmentManager(), "rmmFragment");
     }
 
@@ -438,7 +444,12 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
             if (paramsModel != null) {
                 tmin = paramsModel.tmin;
                 numApert = paramsModel.numApert;
-                text = paramsModel.text;
+                messages = new HashMap<String, String>();
+                if (!paramsModel.messages.isEmpty()) {
+                    for (Message message : paramsModel.messages) {
+                        messages.put(message.languaje.toLowerCase(), message.content);
+                    }
+                }
             }
 
             if (forceShow) {

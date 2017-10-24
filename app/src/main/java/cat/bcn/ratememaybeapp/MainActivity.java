@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cat.bcn.ratememaybe.RateMeMaybe;
 import io.fabric.sdk.android.Fabric;
 
@@ -25,23 +28,23 @@ public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMM
     private void askForRating() {
         //RateMeMaybe.resetData(this);
         RateMeMaybe rmm = new RateMeMaybe(this);
-        rmm.setButtonsTextColor(Color.YELLOW);
-        rmm.setTitleColor(Color.YELLOW);
-        rmm.setMessageColor(Color.LTGRAY);
-        rmm.setBackgroundColor(Color.BLUE);
-        rmm.setIcon(R.drawable.hellokitty_64);
-        rmm.setAdditionalListener(this);
+//        rmm.setIcon(android.R.drawable.sym_def_app_icon);
+//        rmm.setBackgroundColor(Color.BLUE);
+//        rmm.setAdditionalListener(this);
         //rmm.setHandleCancelAsNeutral(false);
         //rmm.setRunWithoutPlayStore(true);
 
         /* we can set popup params directly from code */
-        rmm.setTmin(0);
-        rmm.setNumApert(2);
-        rmm.setText(getString(R.string.ratememaybeapp_message));
+        Map<String, String> messages = new HashMap<String, String>();
+        messages.put("ca", "Missatge");
+        messages.put("es", "Mensaje");
+        messages.put("en", "Message");
+        rmm.setTmin(1);
+        rmm.setNumApert(3);
+        rmm.setMessages(messages);
         /* or specifying an URL to obtain them in JSON format */
 //        rmm.setServiceUrl(SERVICE_URL);
-
-        //rmm.forceShow();
+//        rmm.forceShow();
         rmm.run();
     }
 

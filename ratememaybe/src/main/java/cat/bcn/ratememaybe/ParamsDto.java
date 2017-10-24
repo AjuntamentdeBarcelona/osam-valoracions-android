@@ -3,6 +3,8 @@ package cat.bcn.ratememaybe;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 class ParamsDto {
 
     /* Nº de dies mínims que han de passar per que l’app mostri la popup */
@@ -14,7 +16,7 @@ class ParamsDto {
     public int numApert;
 
     /* text que es mostrarà al popup */
-    @SerializedName("text")
-    public String text;
+    @SerializedName("messages")
+    public List<Message> messages;
 
 }

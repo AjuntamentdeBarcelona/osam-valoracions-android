@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import java.util.Locale;
+import java.util.Map;
+
 public class RateMeMaybeFragment extends DialogFragment implements
         DialogInterface.OnClickListener, OnCancelListener {
 
@@ -25,17 +28,17 @@ public class RateMeMaybeFragment extends DialogFragment implements
     private int titleColor;
     private int messageColor;
     private int backgroundColor;
-    private String popupMessage;
+    private Map<String, String> messages;
 
     public void setData(int customIcon, RMMFragInterface myInterface, int buttonsTextColor, int titleColor, int messageColor,
-            int backgroundColor, String popupMessage) {
+                        int backgroundColor, Map<String, String> messages) {
         this.customIcon = customIcon;
         this.mInterface = myInterface;
         this.buttonsTextColor = buttonsTextColor;
         this.titleColor = titleColor;
         this.messageColor = messageColor;
         this.backgroundColor = backgroundColor;
-        this.popupMessage = popupMessage;
+        this.messages = messages;
     }
 
     @Override
@@ -56,14 +59,25 @@ public class RateMeMaybeFragment extends DialogFragment implements
             builder.setIcon(customIcon);
         }
 
+        try {
+            if (customIcon != 0) {
+                builder.setIcon(customIcon);
+            } else {
+                builder.setIcon(getContext().getPackageManager().getApplicationIcon(getContext().getPackageName()));
+            }
+        } catch (Exception e) {
+            builder.setIcon(android.R.drawable.sym_def_app_icon);
+        }
+
         String appName = getApplicationName();
         builder.setTitle(getString(R.string.dialog_rating_title, appName));
         builder.setPositiveButton(R.string.dialog_rating_positive, this);
         builder.setNeutralButton(R.string.dialog_rating_neutral, this);
         builder.setNegativeButton(R.string.dialog_rating_negative, this);
         builder.setOnCancelListener(this);
-        builder.setMessage(TextUtils.isEmpty(popupMessage) ? getString(R.string.dialog_rating_message, appName) :
-                popupMessage);
+        String message = this.messages.get(Locale.getDefault().getLanguage().toLowerCase());
+        builder.setMessage(TextUtils.isEmpty(message) ? getString(R.string.dialog_rating_message, appName) :
+                message);
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOnShowListener(onShowListener);
