@@ -35,15 +35,15 @@ public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMM
         //rmm.setRunWithoutPlayStore(true);
 
         /* we can set popup params directly from code */
-        Map<String, String> messages = new HashMap<String, String>();
-        messages.put("ca", "Missatge");
-        messages.put("es", "Mensaje");
-        messages.put("en", "Message");
-        rmm.setTmin(1);
-        rmm.setNumApert(3);
-        rmm.setMessages(messages);
+//        Map<String, String> messages = new HashMap<String, String>();
+//        messages.put("ca", "Missatge en català");
+//        messages.put("es", "Mensaje en español");
+//        messages.put("en", "Message in English");
+//        rmm.setTmin(1);
+//        rmm.setNumApert(3);
+//        rmm.setMessages(messages);
         /* or specifying an URL to obtain them in JSON format */
-//        rmm.setServiceUrl(SERVICE_URL);
+        rmm.setServiceUrl(SERVICE_URL);
 //        rmm.forceShow();
         rmm.run();
     }
