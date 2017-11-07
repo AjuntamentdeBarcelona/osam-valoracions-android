@@ -9,6 +9,7 @@
 </style>
 
 <style name="RateMeMaybeDialog" parent="@android:style/Theme.Holo.Light.Dialog.MinWidth">
+    <item name="android:windowBackground">@color/translucent</item>
 </style>
 
 </resources>

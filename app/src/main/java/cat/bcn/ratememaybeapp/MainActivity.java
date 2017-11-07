@@ -2,18 +2,14 @@ package cat.bcn.ratememaybeapp;
 
 import com.crashlytics.android.Crashlytics;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import cat.bcn.ratememaybe.RateMeMaybe;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMMUserChoiceListener {
+public class MainActivity extends AppCompatActivity{
 
     private static final String SERVICE_URL = "http://www.bcn.cat/mobil/apps/rateme/ratememaybe_params.json";
 
@@ -30,7 +26,22 @@ public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMM
         RateMeMaybe rmm = new RateMeMaybe(this);
 //        rmm.setIcon(android.R.drawable.sym_def_app_icon);
 //        rmm.setBackgroundColor(Color.BLUE);
-//        rmm.setAdditionalListener(this);
+        rmm.setAdditionalListener(new RateMeMaybe.OnRMMUserChoiceListener() {
+            @Override
+            public void handlePositive() {
+                lauchSecondActivity();
+            }
+
+            @Override
+            public void handleNeutral() {
+                lauchSecondActivity();
+            }
+
+            @Override
+            public void handleNegative() {
+                lauchSecondActivity();
+            }
+        });
         //rmm.setHandleCancelAsNeutral(false);
         //rmm.setRunWithoutPlayStore(true);
 
@@ -39,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMM
 //        messages.put("ca", "Missatge en català");
 //        messages.put("es", "Mensaje en español");
 //        messages.put("en", "Message in English");
-//        rmm.setTmin(1);
-//        rmm.setNumApert(3);
+//        rmm.setTmin(0);
+//        rmm.setNumApert(1);
 //        rmm.setMessages(messages);
         /* or specifying an URL to obtain them in JSON format */
         rmm.setServiceUrl(SERVICE_URL);
@@ -48,18 +59,8 @@ public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMM
         rmm.run();
     }
 
-    @Override
-    public void handlePositive() {
-        Toast.makeText(this, "Positive button clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void handleNeutral() {
-        Toast.makeText(this, "Neutral button clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void handleNegative() {
-        Toast.makeText(this, "Negative button clicked", Toast.LENGTH_SHORT).show();
+    private void lauchSecondActivity() {
+        startActivity(new Intent(getBaseContext(), SecondActivity.class));
+        finish();
     }
 }

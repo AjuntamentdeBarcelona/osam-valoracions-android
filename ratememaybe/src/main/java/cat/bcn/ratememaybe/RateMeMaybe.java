@@ -282,6 +282,8 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         editor.apply();
         if (showDialog) {
             showDialog();
+        } else {
+            mListener.handleNeutral();
         }
     }
 
@@ -315,17 +317,16 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         editor.apply();
 
         final String appPackageName = mActivity.getPackageName(); // getPackageName() from Context or Activity object
+        if (mListener != null) {
+            mListener.handlePositive();
+        }
         try {
+
             mActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
         } catch (android.content.ActivityNotFoundException anfe) {
             mActivity.startActivity(
                     new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
-
-        if (mListener != null) {
-            mListener.handlePositive();
-        }
-
     }
 
     /**
