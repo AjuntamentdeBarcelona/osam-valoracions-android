@@ -12,6 +12,11 @@
 
 
 
+
+
+
+
+
 ###Android###
 
 # built application files
@@ -61,9 +66,6 @@ mirror/
 #Merge temp files
 *.orig
 *.bak
-
-/gradle
-gradle/
 
 # Monitoring
 *.hprof

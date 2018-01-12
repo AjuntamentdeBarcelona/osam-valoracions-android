@@ -1,19 +1,22 @@
 package cat.bcn.ratememaybeapp;
 
-import android.graphics.Color;
+import com.crashlytics.android.Crashlytics;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import cat.bcn.ratememaybe.RateMeMaybe;
+import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMMUserChoiceListener {
+public class MainActivity extends AppCompatActivity{
 
     private static final String SERVICE_URL = "http://www.bcn.cat/mobil/apps/rateme/ratememaybe_params.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         askForRating();
     }
@@ -21,38 +24,43 @@ public class MainActivity extends AppCompatActivity implements RateMeMaybe.OnRMM
     private void askForRating() {
         //RateMeMaybe.resetData(this);
         RateMeMaybe rmm = new RateMeMaybe(this);
-        rmm.setButtonsTextColor(Color.YELLOW);
-        rmm.setTitleColor(Color.YELLOW);
-        rmm.setMessageColor(Color.LTGRAY);
-        rmm.setBackgroundColor(Color.BLUE);
-        rmm.setIcon(R.drawable.hellokitty_64);
-        rmm.setAdditionalListener(this);
+//        rmm.setIcon(android.R.drawable.sym_def_app_icon);
+//        rmm.setBackgroundColor(Color.BLUE);
+        rmm.setAdditionalListener(new RateMeMaybe.OnRMMUserChoiceListener() {
+            @Override
+            public void handlePositive() {
+                lauchSecondActivity();
+            }
+
+            @Override
+            public void handleNeutral() {
+                lauchSecondActivity();
+            }
+
+            @Override
+            public void handleNegative() {
+                lauchSecondActivity();
+            }
+        });
         //rmm.setHandleCancelAsNeutral(false);
         //rmm.setRunWithoutPlayStore(true);
 
         /* we can set popup params directly from code */
-        rmm.setTmin(0);
-        rmm.setNumApert(2);
-        rmm.setText(getString(R.string.ratememaybeapp_message));
+//        Map<String, String> messages = new HashMap<String, String>();
+//        messages.put("ca", "Missatge en català");
+//        messages.put("es", "Mensaje en español");
+//        messages.put("en", "Message in English");
+//        rmm.setTmin(0);
+//        rmm.setNumApert(1);
+//        rmm.setMessages(messages);
         /* or specifying an URL to obtain them in JSON format */
-//        rmm.setServiceUrl(SERVICE_URL);
-
-        //rmm.forceShow();
+        rmm.setServiceUrl(SERVICE_URL);
+//        rmm.forceShow();
         rmm.run();
     }
 
-    @Override
-    public void handlePositive() {
-        Toast.makeText(this, "Positive button clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void handleNeutral() {
-        Toast.makeText(this, "Neutral button clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void handleNegative() {
-        Toast.makeText(this, "Negative button clicked", Toast.LENGTH_SHORT).show();
+    private void lauchSecondActivity() {
+        startActivity(new Intent(getBaseContext(), SecondActivity.class));
+        finish();
     }
 }
