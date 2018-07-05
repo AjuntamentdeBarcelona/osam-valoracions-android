@@ -183,7 +183,11 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         }
         RateMeMaybeFragment frag = new RateMeMaybeFragment();
         frag.setData(getIcon(), this, mButtonsTextColor, mTitleColor, mMessageColor, mBackgroundColor, messages);
-        frag.show(mActivity.getSupportFragmentManager(), "rmmFragment");
+        if (!mActivity.isFinishing()) {
+            frag.show(mActivity.getSupportFragmentManager(), "rmmFragment");
+        } else {
+            mListener.handleError();
+        }
     }
 
     /**
@@ -348,6 +352,8 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         void handleNeutral();
 
         void handleNegative();
+
+        void handleError();
     }
 
     static class PREF {
@@ -437,11 +443,6 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
 
         @Override
         protected void onPostExecute(ParamsDto paramsModel) {
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-                progressDialog = null;
-            }
-
             if (paramsModel != null) {
                 tmin = paramsModel.tmin;
                 numApert = paramsModel.numApert;
@@ -452,11 +453,22 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
                     }
                 }
             }
-
-            if (forceShow) {
-                showDialog();
+            if (!mActivity.isFinishing()) {
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    progressDialog = null;
+                }
             } else {
-                showDialogIfRequired();
+                mListener.handleError();
+            }
+            if (!mActivity.isFinishing()) {
+                if (forceShow) {
+                    showDialog();
+                } else {
+                    showDialogIfRequired();
+                }
+            } else {
+                mListener.handleError();
             }
         }
     }
