@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog_rating_title">Valorar %s</string>
+    <string name="dialog_rating_positive">Valorar ahora</string>
+    <string name="dialog_rating_neutral">Más tarde</string>
+    <string name="dialog_rating_negative">No, gracias</string>
+    <string name="dialog_rating_message">Si disfruta utilizando %s, por favor tome un momento para valorar la app. Gracias por su apoyo.</string>
+</resources>
