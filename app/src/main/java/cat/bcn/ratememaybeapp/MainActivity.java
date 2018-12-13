@@ -1,6 +1,8 @@
 package cat.bcn.ratememaybeapp;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +13,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity{
 
-    private static final String SERVICE_URL = "http://www.bcn.cat/mobil/apps/rateme/ratememaybe_params.json";
+    private static final String SERVICE_URL = "http://www.bcn.cat/mobil/apps/modulValoracions/sample/rateme_and.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,13 @@ public class MainActivity extends AppCompatActivity{
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         askForRating();
+        Answers.getInstance().logCustom(new CustomEvent("probando Answers de crashlytics"));
+        Crashlytics.logException(new Throwable("No se puede mostrar RateMeMaybe (log)"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void askForRating() {
@@ -40,6 +49,12 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void handleNegative() {
                 lauchSecondActivity();
+            }
+
+            @Override
+            public void handleError() {
+                Answers.getInstance().logCustom(new CustomEvent("No se puede mostar RateMeMaybe (Answer)"));
+                Crashlytics.logException(new Throwable("No se puede mostrar RateMeMaybe (log)"));
             }
         });
         //rmm.setHandleCancelAsNeutral(false);
