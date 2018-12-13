@@ -217,12 +217,14 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         }
 
         if (mPreferences.getBoolean(PREF.DONT_SHOW_AGAIN, false)) {
+            mListener.handlePositive();
             return;
         }
 
         if (!isPlayStoreInstalled()) {
             Log.d(TAG, "No Play Store installed on device.");
             if (!mRunWithoutPlayStore) {
+                mListener.handleError();
                 return;
             }
         }

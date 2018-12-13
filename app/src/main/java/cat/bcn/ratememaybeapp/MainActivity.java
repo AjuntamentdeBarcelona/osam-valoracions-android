@@ -38,17 +38,17 @@ public class MainActivity extends AppCompatActivity{
         rmm.setAdditionalListener(new RateMeMaybe.OnRMMUserChoiceListener() {
             @Override
             public void handlePositive() {
-//                lauchSecondActivity();
+                lauchSecondActivity();
             }
 
             @Override
             public void handleNeutral() {
-//                lauchSecondActivity();
+                lauchSecondActivity();
             }
 
             @Override
             public void handleNegative() {
-//                lauchSecondActivity();
+                lauchSecondActivity();
             }
 
             @Override
