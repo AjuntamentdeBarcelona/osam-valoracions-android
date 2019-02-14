@@ -5,7 +5,7 @@
 ###How to use it?
 - Add these dependencies to your project:
 ```
-compile 'com.github.AjuntamentdeBarcelona:osam-valoracions-android:1.3.0'
+compile 'com.github.AjuntamentdeBarcelona:osam-valoracions-android:1.3.1'
 ```
 - Add this to your root build.gradle
 ```

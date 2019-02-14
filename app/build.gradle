@@ -6,14 +6,14 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "cat.bcn.ratememaybeapp"
         minSdkVersion 19
-        targetSdkVersion 25
-        versionCode 10000
-        versionName "1.0"
+        targetSdkVersion 26
+        versionCode 20180705
+        versionName "1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,7 +27,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile project(':ratememaybe')
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
