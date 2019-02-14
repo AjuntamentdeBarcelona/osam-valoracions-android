@@ -176,15 +176,14 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
      * Actually show the dialog (if it is not currently shown)
      */
     private void showDialog() {
-        if (mActivity.getSupportFragmentManager().findFragmentByTag(
-                "rmmFragment") != null) {
+        if (mActivity.getSupportFragmentManager().findFragmentByTag("rmmFragment") != null) {
             // the dialog is already shown to the user
             return;
         }
         RateMeMaybeFragment frag = new RateMeMaybeFragment();
         frag.setData(getIcon(), this, mButtonsTextColor, mTitleColor, mMessageColor, mBackgroundColor, messages);
-        if (!mActivity.isFinishing()) {
-            frag.show(mActivity.getSupportFragmentManager(), "rmmFragment");
+        if (isActivityAvailable(mActivity)) {
+            mActivity.getSupportFragmentManager().beginTransaction().add(frag, "rmmFragment").commitAllowingStateLoss();
         } else {
             mListener.handleError();
         }
@@ -286,6 +285,7 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         }
 
         editor.apply();
+
         if (showDialog) {
             showDialog();
         } else {
@@ -455,7 +455,7 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
                     }
                 }
             }
-            if (!mActivity.isFinishing()) {
+            if (isActivityAvailable(mActivity)) {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                     progressDialog = null;
@@ -463,7 +463,7 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
             } else {
                 mListener.handleError();
             }
-            if (!mActivity.isFinishing()) {
+            if (isActivityAvailable(mActivity)) {
                 if (forceShow) {
                     showDialog();
                 } else {
@@ -475,6 +475,8 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
         }
     }
 
-
+    private boolean isActivityAvailable(Activity mActivity) {
+        return !mActivity.isFinishing() && !mActivity.isDestroyed();
+    }
 
 }
