@@ -4,9 +4,17 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+
+import java.util.Locale;
 
 import cat.bcn.ratememaybe.RateMeMaybe;
 import io.fabric.sdk.android.Fabric;
@@ -28,6 +36,11 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(changeLanguage(base));
     }
 
     private void askForRating() {
@@ -70,6 +83,7 @@ public class MainActivity extends AppCompatActivity{
 //        rmm.setMessages(messages);
         /* or specifying an URL to obtain them in JSON format */
         rmm.setServiceUrl(SERVICE_URL);
+        rmm.setLanguage(Locale.getDefault().getLanguage());
 //        rmm.forceShow();
         rmm.run();
     }
@@ -77,5 +91,32 @@ public class MainActivity extends AppCompatActivity{
     private void lauchSecondActivity() {
         startActivity(new Intent(getBaseContext(), SecondActivity.class));
         finish();
+    }
+
+    public Context changeLanguage(Context context) {
+        String language = "ca";
+        Resources res = context.getResources();
+        // Change locale settings in the app.
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        Locale locale = new Locale(language);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            conf.setLocale(locale);
+            LocaleList localeList = new LocaleList(locale);
+            LocaleList.setDefault(localeList);
+            conf.setLocales(localeList);
+            context = context.createConfigurationContext(conf);
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            conf.setLocale(locale);
+            context = context.createConfigurationContext(conf);
+            Locale.setDefault(locale);
+
+        } else {
+            conf.locale = locale;
+            res.updateConfiguration(conf, res.getDisplayMetrics());
+            Locale.setDefault(locale);
+        }
+        return context;
     }
 }

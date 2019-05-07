@@ -63,6 +63,8 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
 
     private String serviceUrl;
 
+    private String language;
+
     private Boolean mHandleCancelAsNeutral = true;
 
     private Boolean mRunWithoutPlayStore = false;
@@ -128,8 +130,8 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
      * @param minDaysUntilNextPrompt        Minimum of days before the user is prompted for each next time.
      */
     private void setPromptMinimums(int minLaunchesUntilInitialPrompt,
-            int minDaysUntilInitialPrompt, int minLaunchesUntilNextPrompt,
-            int minDaysUntilNextPrompt) {
+                                   int minDaysUntilInitialPrompt, int minLaunchesUntilNextPrompt,
+                                   int minDaysUntilNextPrompt) {
         this.mMinLaunchesUntilInitialPrompt = minLaunchesUntilInitialPrompt;
         this.mMinDaysUntilInitialPrompt = minDaysUntilInitialPrompt;
         this.mMinLaunchesUntilNextPrompt = minLaunchesUntilNextPrompt;
@@ -146,6 +148,10 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
 
     public void setServiceUrl(String serviceUrl) {
         this.serviceUrl = serviceUrl;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     /**
@@ -181,7 +187,7 @@ public class RateMeMaybe implements RateMeMaybeFragment.RMMFragInterface {
             return;
         }
         RateMeMaybeFragment frag = new RateMeMaybeFragment();
-        frag.setData(getIcon(), this, mButtonsTextColor, mTitleColor, mMessageColor, mBackgroundColor, messages);
+        frag.setData(getIcon(), this, mButtonsTextColor, mTitleColor, mMessageColor, mBackgroundColor, messages, language);
         if (isActivityAvailable(mActivity)) {
             mActivity.getSupportFragmentManager().beginTransaction().add(frag, "rmmFragment").commitAllowingStateLoss();
         } else {
