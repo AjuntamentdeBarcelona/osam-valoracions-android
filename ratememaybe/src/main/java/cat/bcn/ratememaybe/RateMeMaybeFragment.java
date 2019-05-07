@@ -29,9 +29,10 @@ public class RateMeMaybeFragment extends DialogFragment implements
     private int messageColor;
     private int backgroundColor;
     private Map<String, String> messages;
+    private String language;
 
     public void setData(int customIcon, RMMFragInterface myInterface, int buttonsTextColor, int titleColor, int messageColor,
-                        int backgroundColor, Map<String, String> messages) {
+                        int backgroundColor, Map<String, String> messages, String language) {
         this.customIcon = customIcon;
         this.mInterface = myInterface;
         this.buttonsTextColor = buttonsTextColor;
@@ -39,6 +40,7 @@ public class RateMeMaybeFragment extends DialogFragment implements
         this.messageColor = messageColor;
         this.backgroundColor = backgroundColor;
         this.messages = messages;
+        this.language = language;
     }
 
     @Override
@@ -75,7 +77,7 @@ public class RateMeMaybeFragment extends DialogFragment implements
         builder.setNeutralButton(R.string.dialog_rating_neutral, this);
         builder.setNegativeButton(R.string.dialog_rating_negative, this);
         builder.setOnCancelListener(this);
-        String message = this.messages.get(Locale.getDefault().getLanguage().toLowerCase());
+        String message = this.messages.get(language);
         builder.setMessage(TextUtils.isEmpty(message) ? getString(R.string.dialog_rating_message, appName) :
                 message);
 
