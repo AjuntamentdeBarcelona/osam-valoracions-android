@@ -149,7 +149,7 @@ Com en totes les aplicacions de la OSAM, o la gran majoria, s’utilitza la Spla
 ## How to use it?
 - Add these dependencies to your project:
 ```
-compile 'com.github.AjuntamentdeBarcelona:osam-valoracions-android:1.4.0'
+compile 'com.github.AjuntamentdeBarcelona:osam-valoracions-android:1.4.+'
 ```
 - Add this to your root build.gradle
 ```
